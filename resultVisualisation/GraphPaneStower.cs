@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -52,16 +53,18 @@ namespace resultVisualisation
             pane.YAxis.MajorGrid.IsVisible = true;
 
             pane.Legend.Position = LegendPos.InsideBotLeft;
+            pane.Legend.FontSpec.Size = 14;
 
             LineItem curve = pane.AddCurve(averageResult.title, averageResult, Color.Red, SymbolType.None);
-            curve.Line.Width = 2;
+            curve.Line.Width = 3.0F;
 
             int i = 0;
             foreach (Machine machine in machines)
             {
                 i++;
                 Color color = colors[i % colors.Count()];
-                pane.AddCurve(machine.title, machine, color, SymbolType.None);
+                LineItem item = pane.AddCurve(machine.title, machine, color, SymbolType.None);
+                item.Line.Width = 2.0F;
             }
         }
     }

@@ -23,7 +23,7 @@ namespace resultVisualisation
             if (data[0] == null || !data[0].Any())
                 return;
 
-            Slice slice = new Slice(DateTime.Parse(data[1]), Int32.Parse(data[0]), Double.Parse(data[2]));
+            Slice slice = new Slice(DateTime.Parse(data[1]), Int32.Parse(data[0]), Double.Parse(data[2].Replace('.',',')));
 
             slices.Add(slice);
         }

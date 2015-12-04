@@ -34,17 +34,19 @@ namespace resultVisualisation
             this.controlZedGraph = new ZedGraph.ZedGraphControl();
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.dataGridSummary = new System.Windows.Forms.DataGridView();
-            this.labelSettings = new System.Windows.Forms.Label();
             this.comboTicket = new System.Windows.Forms.ComboBox();
             this.labelTicket = new System.Windows.Forms.Label();
             this.comboYear = new System.Windows.Forms.ComboBox();
             this.labelYear = new System.Windows.Forms.Label();
-            this.comboTimeFrame = new System.Windows.Forms.ComboBox();
-            this.labelTimeFrame = new System.Windows.Forms.Label();
+            this.comboSieveParam = new System.Windows.Forms.ComboBox();
+            this.labelSieveParam = new System.Windows.Forms.Label();
             this.buttonZoom = new System.Windows.Forms.Button();
             this.buttonView = new System.Windows.Forms.Button();
             this.comboStrategy = new System.Windows.Forms.ComboBox();
             this.labelStrategy = new System.Windows.Forms.Label();
+            this.comboFillingGapsNumber = new System.Windows.Forms.ComboBox();
+            this.labelFillingGapsNumber = new System.Windows.Forms.Label();
+            this.dataFileInfo = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridSummary)).BeginInit();
             this.SuspendLayout();
             // 
@@ -54,7 +56,7 @@ namespace resultVisualisation
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.controlZedGraph.AutoSize = true;
-            this.controlZedGraph.Location = new System.Drawing.Point(0, 171);
+            this.controlZedGraph.Location = new System.Drawing.Point(0, 149);
             this.controlZedGraph.Name = "controlZedGraph";
             this.controlZedGraph.ScrollGrace = 0D;
             this.controlZedGraph.ScrollMaxX = 0D;
@@ -63,7 +65,7 @@ namespace resultVisualisation
             this.controlZedGraph.ScrollMinX = 0D;
             this.controlZedGraph.ScrollMinY = 0D;
             this.controlZedGraph.ScrollMinY2 = 0D;
-            this.controlZedGraph.Size = new System.Drawing.Size(1220, 493);
+            this.controlZedGraph.Size = new System.Drawing.Size(1352, 515);
             this.controlZedGraph.TabIndex = 0;
             // 
             // splitter1
@@ -71,7 +73,7 @@ namespace resultVisualisation
             this.splitter1.Dock = System.Windows.Forms.DockStyle.Top;
             this.splitter1.Location = new System.Drawing.Point(0, 0);
             this.splitter1.Name = "splitter1";
-            this.splitter1.Size = new System.Drawing.Size(1220, 165);
+            this.splitter1.Size = new System.Drawing.Size(1352, 143);
             this.splitter1.TabIndex = 1;
             this.splitter1.TabStop = false;
             // 
@@ -81,27 +83,15 @@ namespace resultVisualisation
             this.dataGridSummary.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridSummary.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridSummary.Location = new System.Drawing.Point(196, 0);
+            this.dataGridSummary.Location = new System.Drawing.Point(306, 0);
             this.dataGridSummary.Name = "dataGridSummary";
-            this.dataGridSummary.Size = new System.Drawing.Size(1024, 158);
+            this.dataGridSummary.Size = new System.Drawing.Size(1046, 143);
             this.dataGridSummary.TabIndex = 2;
-            // 
-            // labelSettings
-            // 
-            this.labelSettings.AutoSize = true;
-            this.labelSettings.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.labelSettings.Location = new System.Drawing.Point(29, 9);
-            this.labelSettings.Name = "labelSettings";
-            this.labelSettings.Size = new System.Drawing.Size(76, 24);
-            this.labelSettings.TabIndex = 3;
-            this.labelSettings.Text = "Settings";
             // 
             // comboTicket
             // 
             this.comboTicket.FormattingEnabled = true;
-            this.comboTicket.Items.AddRange(new object[] {
-            "usd"});
-            this.comboTicket.Location = new System.Drawing.Point(12, 57);
+            this.comboTicket.Location = new System.Drawing.Point(11, 25);
             this.comboTicket.Name = "comboTicket";
             this.comboTicket.Size = new System.Drawing.Size(66, 21);
             this.comboTicket.TabIndex = 4;
@@ -110,7 +100,7 @@ namespace resultVisualisation
             // labelTicket
             // 
             this.labelTicket.AutoSize = true;
-            this.labelTicket.Location = new System.Drawing.Point(13, 41);
+            this.labelTicket.Location = new System.Drawing.Point(12, 9);
             this.labelTicket.Name = "labelTicket";
             this.labelTicket.Size = new System.Drawing.Size(37, 13);
             this.labelTicket.TabIndex = 5;
@@ -119,9 +109,7 @@ namespace resultVisualisation
             // comboYear
             // 
             this.comboYear.FormattingEnabled = true;
-            this.comboYear.Items.AddRange(new object[] {
-            "2015"});
-            this.comboYear.Location = new System.Drawing.Point(11, 137);
+            this.comboYear.Location = new System.Drawing.Point(10, 76);
             this.comboYear.Name = "comboYear";
             this.comboYear.Size = new System.Drawing.Size(67, 21);
             this.comboYear.TabIndex = 6;
@@ -130,35 +118,33 @@ namespace resultVisualisation
             // labelYear
             // 
             this.labelYear.AutoSize = true;
-            this.labelYear.Location = new System.Drawing.Point(12, 121);
+            this.labelYear.Location = new System.Drawing.Point(12, 60);
             this.labelYear.Name = "labelYear";
             this.labelYear.Size = new System.Drawing.Size(29, 13);
             this.labelYear.TabIndex = 7;
             this.labelYear.Text = "Year";
             // 
-            // comboTimeFrame
+            // comboSieveParam
             // 
-            this.comboTimeFrame.FormattingEnabled = true;
-            this.comboTimeFrame.Items.AddRange(new object[] {
-            "1min"});
-            this.comboTimeFrame.Location = new System.Drawing.Point(12, 97);
-            this.comboTimeFrame.Name = "comboTimeFrame";
-            this.comboTimeFrame.Size = new System.Drawing.Size(66, 21);
-            this.comboTimeFrame.TabIndex = 8;
-            this.comboTimeFrame.SelectedIndexChanged += new System.EventHandler(this.comboTimeFrameSelectedIndexChanged);
+            this.comboSieveParam.FormattingEnabled = true;
+            this.comboSieveParam.Location = new System.Drawing.Point(94, 76);
+            this.comboSieveParam.Name = "comboSieveParam";
+            this.comboSieveParam.Size = new System.Drawing.Size(88, 21);
+            this.comboSieveParam.TabIndex = 8;
+            this.comboSieveParam.SelectedIndexChanged += new System.EventHandler(this.comboSieveParamSelectedIndexChanged);
             // 
-            // labelTimeFrame
+            // labelSieveParam
             // 
-            this.labelTimeFrame.AutoSize = true;
-            this.labelTimeFrame.Location = new System.Drawing.Point(13, 81);
-            this.labelTimeFrame.Name = "labelTimeFrame";
-            this.labelTimeFrame.Size = new System.Drawing.Size(59, 13);
-            this.labelTimeFrame.TabIndex = 9;
-            this.labelTimeFrame.Text = "Time frame";
+            this.labelSieveParam.AutoSize = true;
+            this.labelSieveParam.Location = new System.Drawing.Point(94, 60);
+            this.labelSieveParam.Name = "labelSieveParam";
+            this.labelSieveParam.Size = new System.Drawing.Size(84, 13);
+            this.labelSieveParam.TabIndex = 9;
+            this.labelSieveParam.Text = "Sieve Param (%)";
             // 
             // buttonZoom
             // 
-            this.buttonZoom.Location = new System.Drawing.Point(96, 135);
+            this.buttonZoom.Location = new System.Drawing.Point(50, 120);
             this.buttonZoom.Name = "buttonZoom";
             this.buttonZoom.Size = new System.Drawing.Size(90, 23);
             this.buttonZoom.TabIndex = 10;
@@ -168,7 +154,7 @@ namespace resultVisualisation
             // 
             // buttonView
             // 
-            this.buttonView.Location = new System.Drawing.Point(98, 95);
+            this.buttonView.Location = new System.Drawing.Point(172, 120);
             this.buttonView.Name = "buttonView";
             this.buttonView.Size = new System.Drawing.Size(88, 23);
             this.buttonView.TabIndex = 11;
@@ -179,40 +165,66 @@ namespace resultVisualisation
             // comboStrategy
             // 
             this.comboStrategy.FormattingEnabled = true;
-            this.comboStrategy.Items.AddRange(new object[] {
-            "approximation",
-            "averagining"});
-            this.comboStrategy.Location = new System.Drawing.Point(95, 56);
+            this.comboStrategy.Location = new System.Drawing.Point(94, 25);
             this.comboStrategy.Name = "comboStrategy";
-            this.comboStrategy.Size = new System.Drawing.Size(95, 21);
+            this.comboStrategy.Size = new System.Drawing.Size(195, 21);
             this.comboStrategy.TabIndex = 12;
             this.comboStrategy.SelectedIndexChanged += new System.EventHandler(this.comboStrategySelectedIndexChanged);
             // 
             // labelStrategy
             // 
             this.labelStrategy.AutoSize = true;
-            this.labelStrategy.Location = new System.Drawing.Point(95, 41);
+            this.labelStrategy.Location = new System.Drawing.Point(94, 9);
             this.labelStrategy.Name = "labelStrategy";
             this.labelStrategy.Size = new System.Drawing.Size(46, 13);
             this.labelStrategy.TabIndex = 13;
             this.labelStrategy.Text = "Strategy";
             // 
+            // comboFillingGapsNumber
+            // 
+            this.comboFillingGapsNumber.FormattingEnabled = true;
+            this.comboFillingGapsNumber.Location = new System.Drawing.Point(201, 76);
+            this.comboFillingGapsNumber.Name = "comboFillingGapsNumber";
+            this.comboFillingGapsNumber.Size = new System.Drawing.Size(88, 21);
+            this.comboFillingGapsNumber.TabIndex = 14;
+            this.comboFillingGapsNumber.SelectedIndexChanged += new System.EventHandler(this.comboFillingGapsNumberIndexChanged);
+            // 
+            // labelFillingGapsNumber
+            // 
+            this.labelFillingGapsNumber.AutoSize = true;
+            this.labelFillingGapsNumber.Location = new System.Drawing.Point(198, 60);
+            this.labelFillingGapsNumber.Name = "labelFillingGapsNumber";
+            this.labelFillingGapsNumber.Size = new System.Drawing.Size(101, 13);
+            this.labelFillingGapsNumber.TabIndex = 15;
+            this.labelFillingGapsNumber.Text = "Filling Gaps Number";
+            // 
+            // dataFileInfo
+            // 
+            this.dataFileInfo.AutoSize = true;
+            this.dataFileInfo.ForeColor = System.Drawing.Color.Red;
+            this.dataFileInfo.Location = new System.Drawing.Point(91, 104);
+            this.dataFileInfo.Name = "dataFileInfo";
+            this.dataFileInfo.Size = new System.Drawing.Size(0, 13);
+            this.dataFileInfo.TabIndex = 16;
+            // 
             // ApplicationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1220, 664);
+            this.ClientSize = new System.Drawing.Size(1352, 664);
+            this.Controls.Add(this.dataFileInfo);
+            this.Controls.Add(this.labelFillingGapsNumber);
+            this.Controls.Add(this.comboFillingGapsNumber);
             this.Controls.Add(this.labelStrategy);
             this.Controls.Add(this.comboStrategy);
             this.Controls.Add(this.buttonView);
             this.Controls.Add(this.buttonZoom);
-            this.Controls.Add(this.labelTimeFrame);
-            this.Controls.Add(this.comboTimeFrame);
+            this.Controls.Add(this.labelSieveParam);
+            this.Controls.Add(this.comboSieveParam);
             this.Controls.Add(this.labelYear);
             this.Controls.Add(this.comboYear);
             this.Controls.Add(this.labelTicket);
             this.Controls.Add(this.comboTicket);
-            this.Controls.Add(this.labelSettings);
             this.Controls.Add(this.dataGridSummary);
             this.Controls.Add(this.splitter1);
             this.Controls.Add(this.controlZedGraph);
@@ -230,17 +242,19 @@ namespace resultVisualisation
         private ZedGraphControl controlZedGraph;
         private System.Windows.Forms.Splitter splitter1;
         private System.Windows.Forms.DataGridView dataGridSummary;
-        private System.Windows.Forms.Label labelSettings;
         private System.Windows.Forms.ComboBox comboTicket;
         private System.Windows.Forms.Label labelTicket;
         private System.Windows.Forms.ComboBox comboYear;
         private System.Windows.Forms.Label labelYear;
-        private System.Windows.Forms.ComboBox comboTimeFrame;
-        private System.Windows.Forms.Label labelTimeFrame;
+        private System.Windows.Forms.ComboBox comboSieveParam;
+        private System.Windows.Forms.Label labelSieveParam;
         private System.Windows.Forms.Button buttonZoom;
         private System.Windows.Forms.Button buttonView;
         private System.Windows.Forms.ComboBox comboStrategy;
         private System.Windows.Forms.Label labelStrategy;
+        private System.Windows.Forms.ComboBox comboFillingGapsNumber;
+        private System.Windows.Forms.Label labelFillingGapsNumber;
+        private System.Windows.Forms.Label dataFileInfo;
     }
 }
 

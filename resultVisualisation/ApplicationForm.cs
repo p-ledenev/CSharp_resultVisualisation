@@ -1,14 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using ZedGraph;
 
 namespace resultVisualisation
 {
@@ -17,59 +11,131 @@ namespace resultVisualisation
         private List<Machine> machines;
         private Machine averageResult;
 
-        private String ticket;
-        private String year;
-        private String strategy;
-
         public ApplicationForm()
         {
             InitializeComponent();
             init();
         }
 
-        public void init()
+        private void init()
+        {
+            reset();
+
+            StrategiesParamsExtracter paramsExtracter = new StrategiesParamsExtracter();
+
+            comboYear.Items.AddRange(paramsExtracter.getYears());
+            comboTicket.Items.AddRange(paramsExtracter.getTickets());
+            comboStrategy.Items.AddRange(paramsExtracter.getStrategies());
+            comboSieveParam.Items.AddRange(paramsExtracter.getSieveParams());
+            comboFillingGapsNumber.Items.AddRange(paramsExtracter.getFillingGapsNumber());
+
+            comboSieveParam.SelectedIndex = 0;
+            comboStrategy.SelectedIndex = 0;
+            comboTicket.SelectedIndex = 0;
+            comboYear.SelectedIndex = 0;
+            comboFillingGapsNumber.SelectedIndex = 0;
+        }
+
+        private void reset()
         {
             machines = new List<Machine>();
             averageResult = new Machine("average");
+        }
 
-            comboTicket.SelectedIndex = comboTicket.Items.Count - 1;
-            comboYear.SelectedIndex = comboYear.Items.Count - 1;
-            comboTimeFrame.SelectedIndex = comboTimeFrame.Items.Count - 1;
-            comboStrategy.SelectedIndex = comboStrategy.Items.Count - 1;
+        private String buildDataSuffix()
+        {
+
+            String ticket = (string) comboTicket.SelectedItem;
+            Int32 year = (int) comboYear.SelectedItem;
+            String strategy = (string) comboStrategy.SelectedItem;
+            Double sieveParam = (double) comboSieveParam.SelectedItem;
+            Int32 fillingGapNumber = (int) comboFillingGapsNumber.SelectedItem;
+
+            return ticket + "_" + year + "_" + sieveParam.ToString().Replace(",", ".") + "_" + fillingGapNumber +
+                   "_" + strategy + ".csv";
+        }
+
+        private String getAverageMoneyFileName()
+        {
+            return StrategiesParamsExtracter.path + "averageMoney_" + buildDataSuffix();
+        }
+
+        private String getMachinesMoneyFileName()
+        {
+            return StrategiesParamsExtracter.path + "machinesMoney_" + buildDataSuffix();
+        }
+
+        private String getMachinesSummaryFileName()
+        {
+            return StrategiesParamsExtracter.path + "machinesSummary_" + buildDataSuffix();
+        }
+
+        private void informIfDataFileNotExist()
+        {
+            dataFileInfo.Text = "";
+
+            if (!allCombosSelected() || !File.Exists(getAverageMoneyFileName()))
+                dataFileInfo.Text = "Data file not exist";
+        }
+
+        private StreamReader readFile(String fileName)
+        {
+            if (!File.Exists(fileName))
+            {
+                MessageBox.Show("Data file not exist: \n" + fileName);
+                throw new Exception("Data file not exist");
+            }
+
+            return new StreamReader(fileName);
+        }
+
+        private bool allCombosSelected()
+        {
+            ComboBox[] combos = {comboYear, comboStrategy, comboTicket, comboSieveParam, comboFillingGapsNumber};
+
+            return combos.All(element => element.SelectedItem != null);
         }
 
         private void comboTicketSelectedIndexChanged(object sender, EventArgs e)
         {
-
+            informIfDataFileNotExist();
         }
 
         private void comboYearSelectedIndexChanged(object sender, EventArgs e)
         {
-
+            informIfDataFileNotExist();
         }
 
-        private void comboTimeFrameSelectedIndexChanged(object sender, EventArgs e)
+        private void comboSieveParamSelectedIndexChanged(object sender, EventArgs e)
         {
-
+            informIfDataFileNotExist();
         }
 
         private void comboStrategySelectedIndexChanged(object sender, EventArgs e)
         {
+            informIfDataFileNotExist();
+        }
 
+        private void comboFillingGapsNumberIndexChanged(object sender, EventArgs e)
+        {
+            informIfDataFileNotExist();
         }
 
         private void buttonViewClick(object sender, EventArgs e)
         {
-            ticket = (String)comboTicket.SelectedItem;
-            year = (String)comboYear.SelectedItem;
-            strategy = (String)comboStrategy.SelectedItem;
-
-            init();
-
-            readMachines();
-            readAverageResult();
-            readSummary();
-
+            reset();
+            
+            try
+            {
+                readMachines();
+                readAverageResult();
+                readSummary();
+            }
+            catch (Exception exception)
+            {
+                return;
+            }
+           
             DataGridStower gridStower = new DataGridStower(machines, averageResult);
             gridStower.stow(dataGridSummary);
 
@@ -81,9 +147,10 @@ namespace resultVisualisation
             dataGridSummary.Invalidate();
         }
 
+
         private void readMachines()
         {
-            StreamReader reader = new StreamReader("results/machinesMoney_" + ticket + "_" + year + "_" + strategy + ".csv");
+            StreamReader reader = readFile(getMachinesMoneyFileName());
 
             String line = reader.ReadLine();
             String[] strMachines = line.Split(new string[] { " ;" }, StringSplitOptions.None);
@@ -99,28 +166,28 @@ namespace resultVisualisation
 
                 strMachines = line.Split(new string[] { " ;" }, StringSplitOptions.None);
                 for (int i = 0; i < strMachines.Count(); i++)
-                    if (strMachines[i] != null && strMachines[i].Any())
-                        machines[i].addSlice(strMachines[i]);
+                    if (strMachines[i] != null && strMachines[i].Any())  
+                            machines[i].addSlice(strMachines[i]);
             }
         }
 
         private void readAverageResult()
         {
-            StreamReader reader = new StreamReader("results/averageMoney_" + ticket + "_" + year + "_" + strategy + ".csv");
+            StreamReader reader = readFile(getAverageMoneyFileName());
 
-            String line = "";
-            for (; line != null; line = reader.ReadLine())
+            reader.ReadLine();
+            for (String line=""; line != null; line = reader.ReadLine())
             {
                 if (line == "")
                     continue;
 
-                averageResult.addSlice(line);
+                    averageResult.addSlice(line);
             }
         }
 
         private void readSummary()
         {
-            StreamReader reader = new StreamReader("results/machinesSummary_" + ticket + "_" + year + "_" + strategy + ".csv");
+            StreamReader reader = readFile(getMachinesSummaryFileName());
 
             reader.ReadLine();
             String[] maxLoss = reader.ReadLine().Split(';');

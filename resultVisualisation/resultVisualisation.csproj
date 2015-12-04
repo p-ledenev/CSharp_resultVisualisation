@@ -53,8 +53,10 @@
     <Compile Include="ApplicationForm.Designer.cs">
       <DependentUpon>ApplicationForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="DataFileName.cs" />
     <Compile Include="DataGridStower.cs" />
     <Compile Include="GraphPaneStower.cs" />
+    <Compile Include="StrategiesParamsExtracter.cs" />
     <Compile Include="Machine.cs" />
     <Compile Include="ResultVisualisation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

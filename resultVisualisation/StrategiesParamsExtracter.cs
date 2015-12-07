@@ -50,10 +50,10 @@ namespace resultVisualisation
         private Object[] getArrayOf(Func<DataFileName, Object> lambda)
         {
             ISet<Object> set = new SortedSet<Object>();
-            foreach (DataFileName fileName in fileNames)
+            fileNames.ForEach(fileName =>
             {
                 set.Add(lambda.Invoke(fileName));
-            }
+            });
 
             return toArray(set);
         }

@@ -42,7 +42,7 @@ namespace resultVisualisation
         {
             get
             {
-                return new PointPair(slices[index].dateIndex, slices[index].value);
+                return new PointPair(new XDate(slices[index].date), slices[index].value);
             }
         }
 
@@ -54,6 +54,29 @@ namespace resultVisualisation
         public object Clone()
         {
             throw new NotImplementedException();
+        }
+
+        public DateTime getFirstDate()
+        {
+            return slices[0].date;
+        }
+        public DateTime getLastDate()
+        {
+            return slices[slices.Count-1].date;
+        }
+
+        public double getValueFor(Func<double, double, Boolean> comparation)
+        {
+            double result = slices[0].value;
+
+            slices.ForEach(slice =>
+            {
+                if (comparation.Invoke(slice.value, result))
+                    result = slice.value;
+            }
+            );
+
+            return result;
         }
     }
 }

@@ -47,6 +47,7 @@ namespace resultVisualisation
             this.comboFillingGapsNumber = new System.Windows.Forms.ComboBox();
             this.labelFillingGapsNumber = new System.Windows.Forms.Label();
             this.dataFileInfo = new System.Windows.Forms.Label();
+            this.averageCheckBox = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridSummary)).BeginInit();
             this.SuspendLayout();
             // 
@@ -83,9 +84,9 @@ namespace resultVisualisation
             this.dataGridSummary.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridSummary.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridSummary.Location = new System.Drawing.Point(306, 0);
+            this.dataGridSummary.Location = new System.Drawing.Point(305, 0);
             this.dataGridSummary.Name = "dataGridSummary";
-            this.dataGridSummary.Size = new System.Drawing.Size(1046, 143);
+            this.dataGridSummary.Size = new System.Drawing.Size(1047, 143);
             this.dataGridSummary.TabIndex = 2;
             // 
             // comboTicket
@@ -144,7 +145,7 @@ namespace resultVisualisation
             // 
             // buttonZoom
             // 
-            this.buttonZoom.Location = new System.Drawing.Point(50, 120);
+            this.buttonZoom.Location = new System.Drawing.Point(30, 120);
             this.buttonZoom.Name = "buttonZoom";
             this.buttonZoom.Size = new System.Drawing.Size(90, 23);
             this.buttonZoom.TabIndex = 10;
@@ -154,7 +155,7 @@ namespace resultVisualisation
             // 
             // buttonView
             // 
-            this.buttonView.Location = new System.Drawing.Point(172, 120);
+            this.buttonView.Location = new System.Drawing.Point(146, 120);
             this.buttonView.Name = "buttonView";
             this.buttonView.Size = new System.Drawing.Size(88, 23);
             this.buttonView.TabIndex = 11;
@@ -207,11 +208,22 @@ namespace resultVisualisation
             this.dataFileInfo.Size = new System.Drawing.Size(0, 13);
             this.dataFileInfo.TabIndex = 16;
             // 
+            // averageCheckBox
+            // 
+            this.averageCheckBox.AutoSize = true;
+            this.averageCheckBox.Location = new System.Drawing.Point(260, 125);
+            this.averageCheckBox.Name = "averageCheckBox";
+            this.averageCheckBox.Size = new System.Drawing.Size(15, 14);
+            this.averageCheckBox.TabIndex = 17;
+            this.averageCheckBox.UseVisualStyleBackColor = true;
+            this.averageCheckBox.CheckedChanged += new System.EventHandler(this.averageCheckBox_CheckedChanged);
+            // 
             // ApplicationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1352, 664);
+            this.Controls.Add(this.averageCheckBox);
             this.Controls.Add(this.dataFileInfo);
             this.Controls.Add(this.labelFillingGapsNumber);
             this.Controls.Add(this.comboFillingGapsNumber);
@@ -255,6 +267,7 @@ namespace resultVisualisation
         private System.Windows.Forms.ComboBox comboFillingGapsNumber;
         private System.Windows.Forms.Label labelFillingGapsNumber;
         private System.Windows.Forms.Label dataFileInfo;
+        private System.Windows.Forms.CheckBox averageCheckBox;
     }
 }
 

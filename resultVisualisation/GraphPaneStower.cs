@@ -25,12 +25,20 @@ namespace resultVisualisation
             this.averageResult = averageResult;
         }
 
-        public void stow(GraphPane pane)
+        public void stowAll(GraphPane pane)
         {
-            addCurves(pane);
+            prepare(pane);
+            addAverageCurve(pane);
+            addMachinesCurves(pane);
         }
 
-        protected void addCurves(GraphPane pane)
+        public void stowAverage(GraphPane pane)
+        {
+            prepare(pane);
+            addAverageCurve(pane);
+        }
+
+        protected void prepare(GraphPane pane)
         {
             pane.CurveList.Clear();
 
@@ -59,21 +67,26 @@ namespace resultVisualisation
             pane.YAxis.Scale.Min = getMinimumValue() - 2;
             pane.YAxis.Scale.Max = getMaximunValue();
             pane.XAxis.Scale.MajorStep = 1;
-            
+
             pane.Legend.Position = LegendPos.InsideBotLeft;
+        }
 
-            LineItem curve = pane.AddCurve(averageResult.title, averageResult, Color.Red, SymbolType.None);
-            curve.Line.Width = 2;
-            curve.Line.Style = DashStyle.Dash;
-
+        protected void addMachinesCurves(GraphPane pane)
+        {
             int i = 0;
             foreach (Machine machine in machines)
             {
                 i++;
                 Color color = colors[i % colors.Count()];
-                curve = pane.AddCurve(machine.title, machine, color, SymbolType.None);
+                LineItem curve = pane.AddCurve(machine.title, machine, color, SymbolType.None);
                 curve.Line.Width = 2;
             }
+        }
+
+        protected void addAverageCurve(GraphPane pane)
+        {
+            LineItem curve = pane.AddCurve(averageResult.title, averageResult, Color.Red, SymbolType.None);
+            curve.Line.Width = 2;
         }
 
         private DateTime getFirstDate()

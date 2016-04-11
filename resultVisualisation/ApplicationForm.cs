@@ -11,6 +11,9 @@ namespace resultVisualisation
         private List<Machine> machines;
         private Machine averageResult;
 
+        private GraphPaneStower paneStower;
+        private DataGridStower gridStower;
+
         public ApplicationForm()
         {
             InitializeComponent();
@@ -136,11 +139,11 @@ namespace resultVisualisation
                 return;
             }
            
-            DataGridStower gridStower = new DataGridStower(machines, averageResult);
+            gridStower = new DataGridStower(machines, averageResult);
             gridStower.stow(dataGridSummary);
 
-            GraphPaneStower paneStower = new GraphPaneStower(machines, averageResult);
-            paneStower.stow(controlZedGraph.GraphPane);
+            paneStower = new GraphPaneStower(machines, averageResult);
+            paneStower.stowAll(controlZedGraph.GraphPane);
 
             controlZedGraph.AxisChange();
             controlZedGraph.Invalidate();
@@ -214,6 +217,20 @@ namespace resultVisualisation
         private void buttonZoomClick(object sender, EventArgs e)
         {
             controlZedGraph.ZoomOut(controlZedGraph.GraphPane);
+        }
+
+        private void averageCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (averageCheckBox.Checked)
+            {
+                paneStower.stowAverage(controlZedGraph.GraphPane);
+            }
+            else {
+                paneStower.stowAll(controlZedGraph.GraphPane);
+            }
+
+            controlZedGraph.AxisChange();
+            controlZedGraph.Invalidate();
         }
     }
 }
